@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Concepimento Companion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <p class="eyebrow">Supporto al concepimento</p>
+          <h1>Concepimento Companion</h1>
+          <p class="brand-copy">
+            Biomarcatori quotidiani, benessere preconcezionale e alert clinici in un'unica dashboard.
+          </p>
+        </div>
+
+        <nav class="nav">
+          <a href="#dashboard" class="nav-link active">Dashboard</a>
+          <a href="#logger" class="nav-link">Logger</a>
+          <a href="#analytics" class="nav-link">Grafici</a>
+          <a href="#wellness" class="nav-link">Lifestyle</a>
+          <a href="#support" class="nav-link">Supporto</a>
+        </nav>
+
+        <section class="card disclaimer">
+          <p class="eyebrow">Disclaimer</p>
+          <p>
+            Questa app e una demo di supporto educativo: non sostituisce il parere di ginecologo, ostetrica o
+            specialista in medicina della riproduzione.
+          </p>
+        </section>
+      </aside>
+
+      <main class="main-content">
+        <section id="dashboard" class="panel hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Stato della fertilita in tempo reale</p>
+            <h2>Individua la finestra fertile con un linguaggio clinico ma semplice.</h2>
+            <p>
+              L'algoritmo combina muco cervicale, cervice in modalita SHOW, andamento termico e dati storici per
+              stimare giorni a bassa, alta e massima fertilita.
+            </p>
+          </div>
+
+          <div class="hero-grid">
+            <article class="card status-card">
+              <div class="status-ring" id="statusRing">
+                <span id="statusLabel">Alta fertilita</span>
+              </div>
+              <div>
+                <p class="metric-label">Finestra fertile attuale</p>
+                <h3 id="fertilityHeadline">Giorno 3 di 6</h3>
+                <p id="fertilitySummary">
+                  Sensazione umida + muco filante + cervice alta e morbida: quadro compatibile con fase fertile.
+                </p>
+              </div>
+            </article>
+
+            <article class="card stat-card">
+              <p class="metric-label">Conto alla rovescia ovulazione</p>
+              <h3 id="ovulationCountdown">~2 giorni</h3>
+              <p>Il rilascio dell'ovocita dura 12-24 ore. Il picco di lubrificazione aiuta a definire il timing.</p>
+            </article>
+
+            <article class="card stat-card">
+              <p class="metric-label">Fecondabilita mensile</p>
+              <h3 id="fecundabilityValue">15-20%</h3>
+              <p id="fecundabilityText">Stima orientativa per la fascia 30-34 anni, utile per calibrare le aspettative.</p>
+            </article>
+
+            <article class="card stat-card">
+              <p class="metric-label">Giorno del picco</p>
+              <h3 id="peakDayValue">In osservazione</h3>
+              <p id="peakDayText">L'ultimo giorno di massima lubrificazione verra marcato automaticamente.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="logger" class="panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Hub di inserimento dati</p>
+              <h2>Logger biometrico rapido</h2>
+            </div>
+            <p>Registrazione quotidiana semplificata per Metodo Billings e osservazione cervicale SHOW.</p>
+          </div>
+
+          <div class="form-grid">
+            <form class="card form-card" id="biomarkerForm">
+              <label>
+                Eta
+                <input type="number" id="ageInput" min="18" max="55" value="32" />
+              </label>
+
+              <label>
+                Mesi di tentativi mirati
+                <input type="number" id="monthsTryingInput" min="0" max="60" value="4" />
+              </label>
+
+              <label>
+                Sensazione vulvare
+                <select id="sensationInput">
+                  <option value="dry">Asciutto</option>
+                  <option value="moist" selected>Umido</option>
+                  <option value="wet">Bagnato</option>
+                  <option value="lubricative">Lubrificato</option>
+                </select>
+              </label>
+
+              <label>
+                Aspetto del muco
+                <select id="mucusInput">
+                  <option value="opaque">Opaco</option>
+                  <option value="creamy">Cremoso</option>
+                  <option value="stretchy" selected>Filante</option>
+                  <option value="eggwhite">Chiara d'uovo</option>
+                </select>
+              </label>
+
+              <label>
+                Spinnbarkeit
+                <select id="spinnbarkeitInput">
+                  <option value="no">Assente</option>
+                  <option value="yes" selected>Presente</option>
+                </select>
+              </label>
+
+              <label>
+                Posizione cervice
+                <select id="cervixHeightInput">
+                  <option value="low">Bassa</option>
+                  <option value="high" selected>Alta</option>
+                </select>
+              </label>
+
+              <label>
+                Consistenza cervice
+                <select id="cervixTextureInput">
+                  <option value="firm">Dura</option>
+                  <option value="soft" selected>Morbida</option>
+                </select>
+              </label>
+
+              <label>
+                Apertura cervice
+                <select id="cervixOpenInput">
+                  <option value="closed">Chiusa</option>
+                  <option value="open" selected>Aperta</option>
+                </select>
+              </label>
+
+              <label class="checkbox-row">
+                <input type="checkbox" id="irregularCyclesInput" />
+                Cicli irregolari
+              </label>
+
+              <label class="checkbox-row">
+                <input type="checkbox" id="pelvicPainInput" />
+                Dolore pelvico cronico
+              </label>
+
+              <label class="checkbox-row">
+                <input type="checkbox" id="pelvicInfectionInput" />
+                Pregresse infezioni pelviche
+              </label>
+
+              <button type="submit" class="primary-button">Aggiorna la valutazione</button>
+            </form>
+
+            <article class="card insight-card">
+              <p class="eyebrow">Lettura clinica</p>
+              <h3 id="billingsTitle">Pattern estrogenico presente</h3>
+              <p id="billingsSummary">
+                Il passaggio da asciutto a umido e la presenza di muco filante suggeriscono avvicinamento all'ovulazione.
+              </p>
+
+              <div class="show-grid">
+                <div>
+                  <span class="pill">S</span>
+                  <p>Soft</p>
+                </div>
+                <div>
+                  <span class="pill">H</span>
+                  <p>High</p>
+                </div>
+                <div>
+                  <span class="pill">O</span>
+                  <p>Open</p>
+                </div>
+                <div>
+                  <span class="pill">W</span>
+                  <p>Wet</p>
+                </div>
+              </div>
+
+              <div class="alert-box" id="supportAlert">
+                Nessun alert specialistico immediato.
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="analytics" class="panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Clinica domiciliare</p>
+              <h2>Grafici analitici</h2>
+            </div>
+            <p>Visualizzazioni integrate per muco cervicale, BBT e andamento ormonale stimato.</p>
+          </div>
+
+          <div class="analytics-grid">
+            <article class="card chart-card">
+              <div class="chart-header">
+                <h3>Muco e giorno del picco</h3>
+                <span class="legend">Asciutto -> Lubrificato</span>
+              </div>
+              <div class="mucus-chart" aria-label="Grafico del muco cervicale">
+                <div class="bar low"></div>
+                <div class="bar low"></div>
+                <div class="bar medium"></div>
+                <div class="bar medium"></div>
+                <div class="bar high"></div>
+                <div class="bar peak"></div>
+                <div class="bar fallback"></div>
+              </div>
+              <p class="chart-caption" id="peakCaption">
+                Il giorno evidenziato come "Peak" corrisponde all'ultimo giorno di massima lubrificazione osservata.
+              </p>
+            </article>
+
+            <article class="card chart-card">
+              <div class="chart-header">
+                <h3>BBT e shift termico</h3>
+                <span class="legend">Conferma post-ovulatoria</span>
+              </div>
+              <svg viewBox="0 0 360 180" class="line-chart" role="img" aria-label="Grafico della temperatura basale">
+                <polyline
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="4"
+                  points="10,122 58,126 106,124 154,120 202,116 250,94 298,88 346,82"
+                />
+                <line x1="242" y1="18" x2="242" y2="160" class="marker-line" />
+                <text x="250" y="30">Shift</text>
+              </svg>
+              <p class="chart-caption">
+                Un rialzo termico sostenuto dopo il giorno del picco aiuta a confermare che l'ovulazione e probabilmente gia avvenuta.
+              </p>
+            </article>
+
+            <article class="card chart-card wide">
+              <div class="chart-header">
+                <h3>Andamento ormonale stimato</h3>
+                <span class="legend">Estrogeni, LH, progesterone</span>
+              </div>
+              <div class="hormone-bands">
+                <div>
+                  <span>Estrogeni</span>
+                  <div class="band estrogen"></div>
+                </div>
+                <div>
+                  <span>LH</span>
+                  <div class="band lh"></div>
+                </div>
+                <div>
+                  <span>Progesterone</span>
+                  <div class="band progesterone"></div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="wellness" class="panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Lifestyle & wellness coach</p>
+              <h2>Checklist preconcezionale</h2>
+            </div>
+            <p>Piccoli gesti quotidiani per migliorare il contesto metabolico, infiammatorio e nutrizionale.</p>
+          </div>
+
+          <div class="wellness-grid">
+            <article class="card checklist-card">
+              <h3>Tracker quotidiano</h3>
+              <label class="checkbox-row"><input type="checkbox" checked /> Acido folico 0.4 mg assunto oggi</label>
+              <label class="checkbox-row"><input type="checkbox" checked /> 7-9 ore di sonno</label>
+              <label class="checkbox-row"><input type="checkbox" /> Attivita fisica moderata</label>
+              <label class="checkbox-row"><input type="checkbox" checked /> Nessun fumo o marijuana</label>
+              <label class="checkbox-row"><input type="checkbox" checked /> Caffeina entro 1-2 tazze</label>
+            </article>
+
+            <article class="card diet-card">
+              <h3>Dieta mediterranea</h3>
+              <ul>
+                <li>Grassi monoinsaturi: olio extravergine d'oliva, avocado, frutta secca.</li>
+                <li>Omega-3 e pesce azzurro: supporto metabolico e antinfiammatorio.</li>
+                <li>Proteine vegetali e legumi: equilibrio glicemico e sazieta.</li>
+                <li>Antiossidanti da frutta, verdure, pomodoro, zinco e selenio.</li>
+              </ul>
+            </article>
+
+            <article class="card toxin-card">
+              <h3>Alert tossine</h3>
+              <p>
+                Ridurre fumo, alcol e droghe ricreative e limitare l'eccesso di caffeina e una misura concreta per la salute preconcezionale.
+              </p>
+              <p class="micro-note">Promemoria: avviare l'acido folico almeno un mese prima del concepimento.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="support" class="panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Rule of 35</p>
+              <h2>Supporto diagnostico e triage</h2>
+            </div>
+            <p>La logica di consulto si aggiorna in base a eta, durata dei tentativi e segnali di allarme.</p>
+          </div>
+
+          <div class="support-grid">
+            <article class="card">
+              <h3>Alert fertilita</h3>
+              <p id="rule35Text">
+                Sotto i 35 anni si suggerisce valutazione dopo 12 mesi di rapporti mirati; dai 35 anni dopo 6 mesi.
+              </p>
+            </article>
+
+            <article class="card">
+              <h3>Symptom checker</h3>
+              <p id="symptomText">
+                Cicli irregolari, dolore pelvico cronico o anamnesi di infezioni pelviche richiedono attenzione precoce.
+              </p>
+            </article>
+
+            <article class="card">
+              <h3>Export medico</h3>
+              <p>
+                Prevedi un PDF con timeline dei cicli, giorno del picco, BBT, sintomi e terapie da condividere in visita.
+              </p>
+              <button class="secondary-button" type="button">Anteprima export</button>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

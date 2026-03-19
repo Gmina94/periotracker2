@@ -1,0 +1,449 @@
+:root {
+  --bg: #f5efe5;
+  --bg-soft: #fcf9f3;
+  --ink: #1f1b18;
+  --muted: #65594f;
+  --line: rgba(56, 41, 24, 0.12);
+  --card: rgba(255, 252, 247, 0.82);
+  --accent: #d76f4a;
+  --accent-deep: #af4526;
+  --sage: #8ea67c;
+  --olive: #68754a;
+  --gold: #efb55f;
+  --rose: #d88d8d;
+  --shadow: 0 18px 60px rgba(74, 43, 16, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(239, 181, 95, 0.24), transparent 30%),
+    radial-gradient(circle at top right, rgba(142, 166, 124, 0.18), transparent 26%),
+    linear-gradient(180deg, #fbf6ee 0%, var(--bg) 100%);
+  color: var(--ink);
+  font-family: "Space Grotesk", sans-serif;
+}
+
+p,
+li,
+label,
+input,
+select,
+button {
+  font-size: 0.98rem;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: "Source Serif 4", serif;
+  line-height: 1.05;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 32px 24px;
+  border-right: 1px solid var(--line);
+  background: rgba(255, 248, 240, 0.76);
+  backdrop-filter: blur(18px);
+}
+
+.brand h1 {
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+}
+
+.brand-copy {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--accent-deep);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.nav {
+  display: grid;
+  gap: 10px;
+  margin: 32px 0;
+}
+
+.nav-link {
+  color: var(--ink);
+  text-decoration: none;
+  padding: 12px 14px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+
+.nav-link.active,
+.nav-link:hover {
+  background: rgba(215, 111, 74, 0.12);
+  border-color: rgba(215, 111, 74, 0.16);
+}
+
+.main-content {
+  padding: 28px;
+}
+
+.panel {
+  margin-bottom: 28px;
+}
+
+.hero {
+  padding: 24px;
+  border-radius: 30px;
+  background:
+    linear-gradient(135deg, rgba(255, 248, 240, 0.94), rgba(255, 251, 246, 0.72)),
+    rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.hero-copy {
+  max-width: 760px;
+  margin-bottom: 24px;
+}
+
+.hero-copy h2 {
+  font-size: clamp(2.1rem, 4vw, 4rem);
+  margin-bottom: 12px;
+}
+
+.hero-copy p {
+  color: var(--muted);
+  max-width: 64ch;
+  line-height: 1.7;
+}
+
+.hero-grid,
+.form-grid,
+.analytics-grid,
+.wellness-grid,
+.support-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.hero-grid {
+  grid-template-columns: 1.4fr repeat(3, 1fr);
+}
+
+.form-grid {
+  grid-template-columns: 1.1fr 0.9fr;
+}
+
+.analytics-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.wellness-grid,
+.support-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.card {
+  padding: 20px;
+  border-radius: 24px;
+  background: var(--card);
+  border: 1px solid rgba(95, 65, 29, 0.08);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+}
+
+.status-card {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  align-items: center;
+  gap: 18px;
+}
+
+.status-ring {
+  width: 150px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 24px;
+  font-weight: 700;
+  color: var(--accent-deep);
+  background:
+    radial-gradient(circle, rgba(255, 251, 246, 1) 42%, transparent 44%),
+    conic-gradient(var(--accent) 0 240deg, rgba(215, 111, 74, 0.14) 240deg 360deg);
+}
+
+.status-ring.low {
+  color: var(--olive);
+  background:
+    radial-gradient(circle, rgba(255, 251, 246, 1) 42%, transparent 44%),
+    conic-gradient(var(--sage) 0 110deg, rgba(142, 166, 124, 0.12) 110deg 360deg);
+}
+
+.status-ring.peak {
+  color: #8c2f2f;
+  background:
+    radial-gradient(circle, rgba(255, 251, 246, 1) 42%, transparent 44%),
+    conic-gradient(var(--rose) 0 320deg, rgba(216, 141, 141, 0.12) 320deg 360deg);
+}
+
+.metric-label {
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.stat-card h3,
+.status-card h3,
+.insight-card h3,
+.chart-card h3,
+.checklist-card h3,
+.diet-card h3,
+.toxin-card h3 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px;
+  margin: 18px 0;
+}
+
+.section-heading p:last-child {
+  margin: 0;
+  color: var(--muted);
+  max-width: 60ch;
+  line-height: 1.6;
+}
+
+.form-card {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.form-card label {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+}
+
+.form-card label.checkbox-row {
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+}
+
+.form-card input,
+.form-card select,
+.primary-button,
+.secondary-button {
+  border-radius: 14px;
+  border: 1px solid rgba(78, 58, 30, 0.12);
+  padding: 12px 14px;
+  font: inherit;
+}
+
+.primary-button,
+.secondary-button {
+  cursor: pointer;
+}
+
+.primary-button {
+  grid-column: 1 / -1;
+  background: var(--accent);
+  color: white;
+  border: none;
+}
+
+.secondary-button {
+  background: transparent;
+}
+
+.insight-card p,
+.card p,
+.card li {
+  line-height: 1.6;
+}
+
+.show-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 22px 0;
+}
+
+.show-grid div {
+  text-align: center;
+}
+
+.pill {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(215, 111, 74, 0.12);
+  color: var(--accent-deep);
+  font-weight: 700;
+}
+
+.alert-box {
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(142, 166, 124, 0.14);
+}
+
+.alert-box.warning {
+  background: rgba(239, 181, 95, 0.18);
+}
+
+.alert-box.danger {
+  background: rgba(216, 141, 141, 0.22);
+}
+
+.chart-card.wide {
+  grid-column: 1 / -1;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.legend,
+.micro-note,
+.chart-caption {
+  color: var(--muted);
+}
+
+.mucus-chart {
+  display: grid;
+  align-items: end;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  min-height: 180px;
+  padding-top: 20px;
+}
+
+.bar {
+  border-radius: 24px 24px 12px 12px;
+  background: var(--sage);
+}
+
+.bar.low { height: 34px; }
+.bar.medium { height: 76px; background: #c9b067; }
+.bar.high { height: 128px; background: var(--accent); }
+.bar.peak { height: 154px; background: var(--rose); }
+.bar.fallback { height: 68px; background: #b68b73; }
+
+.line-chart {
+  width: 100%;
+  min-height: 180px;
+  color: var(--accent-deep);
+  background: linear-gradient(180deg, rgba(215, 111, 74, 0.06), transparent);
+  border-radius: 18px;
+}
+
+.marker-line {
+  stroke: rgba(31, 27, 24, 0.28);
+  stroke-dasharray: 6 6;
+}
+
+.hormone-bands {
+  display: grid;
+  gap: 18px;
+}
+
+.hormone-bands > div {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.band {
+  height: 18px;
+  border-radius: 999px;
+}
+
+.band.estrogen {
+  background: linear-gradient(90deg, rgba(142, 166, 124, 0.16), var(--sage), rgba(215, 111, 74, 0.22));
+}
+
+.band.lh {
+  background: linear-gradient(90deg, rgba(215, 111, 74, 0.08) 0 42%, var(--gold) 58%, rgba(215, 111, 74, 0.08) 76%);
+}
+
+.band.progesterone {
+  background: linear-gradient(90deg, rgba(104, 117, 74, 0.08) 0 40%, rgba(104, 117, 74, 0.26) 50%, var(--olive) 100%);
+}
+
+ul {
+  margin: 12px 0 0;
+  padding-left: 18px;
+}
+
+@media (max-width: 1100px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero-grid,
+  .form-grid,
+  .analytics-grid,
+  .wellness-grid,
+  .support-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .status-card {
+    grid-template-columns: 1fr;
+  }
+
+  .form-card {
+    grid-template-columns: 1fr;
+  }
+
+  .section-heading {
+    display: block;
+  }
+}
