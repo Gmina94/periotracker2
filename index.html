@@ -12,16 +12,141 @@
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body>
+  <body data-theme="apricot" data-view="auth">
+    <section class="screen auth-screen" id="authScreen">
+      <div class="screen-panel auth-panel">
+        <div class="auth-copy">
+          <p class="eyebrow">Supporto al concepimento</p>
+          <h1>Accedi e ritrova il tuo diario fertile.</h1>
+          <p>
+            Login Google, dati salvati sul tuo account e una dashboard pensata per uso quotidiano da smartphone.
+          </p>
+        </div>
+
+        <div class="card auth-card">
+          <p class="metric-label">Accesso</p>
+          <h2>Continua con Google</h2>
+          <p>Al primo accesso ti chiederemo solo i dati personali utili per i calcoli e il monitoraggio.</p>
+          <button class="google-button auth-button" type="button" id="googleConnectButton">Accedi con Google</button>
+          <p class="micro-note" id="authStatus">Nessuna sessione attiva.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen onboarding-screen" id="onboardingScreen" hidden>
+      <div class="screen-panel onboarding-panel">
+        <div class="auth-copy">
+          <p class="eyebrow">Primo accesso</p>
+          <h1>Impostiamo il tuo profilo clinico iniziale.</h1>
+          <p>
+            Questi dati ci aiutano a personalizzare stime, promemoria e valutazione della finestra fertile.
+          </p>
+        </div>
+
+        <form class="card onboarding-form" id="onboardingForm">
+          <label>
+            Nome visualizzato
+            <input type="text" id="displayNameInput" placeholder="Es. Elisa" />
+          </label>
+
+          <label>
+            Eta
+            <input type="number" id="ageInput" min="18" max="55" />
+          </label>
+
+          <label>
+            Lunghezza media ciclo
+            <input type="number" id="cycleLengthInput" min="20" max="45" />
+          </label>
+
+          <label>
+            Durata media mestruazione
+            <input type="number" id="periodLengthInput" min="2" max="10" />
+          </label>
+
+          <label>
+            Data ultima mestruazione
+            <input type="date" id="lastPeriodInput" />
+          </label>
+
+          <label>
+            Mesi di tentativi mirati
+            <input type="number" id="monthsTryingInput" min="0" max="60" />
+          </label>
+
+          <label>
+            Obiettivo
+            <select id="goalInput">
+              <option value="concepimento">Concepimento</option>
+              <option value="monitoraggio">Monitoraggio del ciclo</option>
+              <option value="preconception">Preparazione preconcezionale</option>
+            </select>
+          </label>
+
+          <label>
+            Tema visivo
+            <select id="themeInput">
+              <option value="apricot">Albicocca</option>
+              <option value="sage">Salvia</option>
+              <option value="rose">Rosato</option>
+            </select>
+          </label>
+
+          <label class="checkbox-row">
+            <input type="checkbox" id="irregularCyclesInput" />
+            Cicli irregolari
+          </label>
+
+          <label class="checkbox-row">
+            <input type="checkbox" id="pelvicPainInput" />
+            Dolore pelvico cronico
+          </label>
+
+          <label class="checkbox-row">
+            <input type="checkbox" id="pelvicInfectionInput" />
+            Pregresse infezioni pelviche
+          </label>
+
+          <button class="primary-button" type="submit">Entra nell'app</button>
+          <p class="micro-note" id="onboardingStatus">I dati verranno salvati sul tuo account dopo la conferma.</p>
+        </form>
+      </div>
+    </section>
+
+    <header class="mobile-topbar">
+      <div>
+        <p class="eyebrow">Fertilita smart</p>
+        <h1>Concepimento Companion</h1>
+      </div>
+      <button class="ghost-button" type="button" id="mobileSaveButton">Salva</button>
+    </header>
+
     <div class="app-shell">
       <aside class="sidebar">
         <div class="brand">
           <p class="eyebrow">Supporto al concepimento</p>
           <h1>Concepimento Companion</h1>
           <p class="brand-copy">
-            Biomarcatori quotidiani, benessere preconcezionale e alert clinici in un'unica dashboard.
+            Una dashboard piu chiara, con meno rumore e un percorso pensato per accompagnarti giorno dopo giorno.
           </p>
         </div>
+
+        <section class="card account-card">
+          <div class="account-header">
+            <div>
+              <p class="eyebrow">Account</p>
+              <h2 id="profileGreeting">Ciao</h2>
+            </div>
+            <span class="sync-badge" id="syncBadge">Firebase attivo</span>
+          </div>
+          <p id="accountSummary">I tuoi dati sono associati al tuo account Google e sincronizzati su Firebase.</p>
+          <div class="account-actions">
+            <button class="secondary-button" type="button" id="saveDataButton">Salva ora</button>
+            <button class="secondary-button" type="button" id="editProfileButton">Modifica profilo</button>
+            <button class="ghost-button" type="button" id="logoutButton">Esci</button>
+          </div>
+          <p class="micro-note" id="saveStatus">Nessun salvataggio recente.</p>
+        </section>
 
         <nav class="nav">
           <a href="#dashboard" class="nav-link active">Dashboard</a>
@@ -34,7 +159,7 @@
         <section class="card disclaimer">
           <p class="eyebrow">Disclaimer</p>
           <p>
-            Questa app e una demo di supporto educativo: non sostituisce il parere di ginecologo, ostetrica o
+            Questa app e uno strumento di supporto educativo: non sostituisce il parere di ginecologo, ostetrica o
             specialista in medicina della riproduzione.
           </p>
         </section>
@@ -44,10 +169,9 @@
         <section id="dashboard" class="panel hero">
           <div class="hero-copy">
             <p class="eyebrow">Stato della fertilita in tempo reale</p>
-            <h2>Individua la finestra fertile con un linguaggio clinico ma semplice.</h2>
-            <p>
-              L'algoritmo combina muco cervicale, cervice in modalita SHOW, andamento termico e dati storici per
-              stimare giorni a bassa, alta e massima fertilita.
+            <h2 id="heroTitle">Il tuo diario fertile, finalmente chiaro.</h2>
+            <p id="heroDescription">
+              Una lettura immediata della tua fase attuale, con indicatori utili e contenuti adattati ai tuoi dati.
             </p>
           </div>
 
@@ -58,7 +182,7 @@
               </div>
               <div>
                 <p class="metric-label">Finestra fertile attuale</p>
-                <h3 id="fertilityHeadline">Giorno 3 di 6</h3>
+                <h3 id="fertilityHeadline">Giorno fertile attivo</h3>
                 <p id="fertilitySummary">
                   Sensazione umida + muco filante + cervice alta e morbida: quadro compatibile con fase fertile.
                 </p>
@@ -66,15 +190,15 @@
             </article>
 
             <article class="card stat-card">
-              <p class="metric-label">Conto alla rovescia ovulazione</p>
+              <p class="metric-label">Countdown ovulazione</p>
               <h3 id="ovulationCountdown">~2 giorni</h3>
-              <p>Il rilascio dell'ovocita dura 12-24 ore. Il picco di lubrificazione aiuta a definire il timing.</p>
+              <p id="countdownText">Stima personalizzata in base a ciclo medio, data ultima mestruazione e biomarcatori.</p>
             </article>
 
             <article class="card stat-card">
               <p class="metric-label">Fecondabilita mensile</p>
               <h3 id="fecundabilityValue">15-20%</h3>
-              <p id="fecundabilityText">Stima orientativa per la fascia 30-34 anni, utile per calibrare le aspettative.</p>
+              <p id="fecundabilityText">Stima orientativa per la fascia 30-34 anni.</p>
             </article>
 
             <article class="card stat-card">
@@ -83,34 +207,39 @@
               <p id="peakDayText">L'ultimo giorno di massima lubrificazione verra marcato automaticamente.</p>
             </article>
           </div>
+
+          <div class="quick-strip">
+            <article class="card mini-card">
+              <p class="metric-label">Ultima mestruazione</p>
+              <h3 id="lastPeriodValue">Da impostare</h3>
+            </article>
+            <article class="card mini-card">
+              <p class="metric-label">Ciclo medio</p>
+              <h3 id="cycleValue">28 giorni</h3>
+            </article>
+            <article class="card mini-card">
+              <p class="metric-label">Ultimo sync</p>
+              <h3 id="lastSyncValue">Non ancora</h3>
+            </article>
+          </div>
         </section>
 
         <section id="logger" class="panel">
           <div class="section-heading">
             <div>
               <p class="eyebrow">Hub di inserimento dati</p>
-              <h2>Logger biometrico rapido</h2>
+              <h2>Logger quotidiano essenziale</h2>
             </div>
-            <p>Registrazione quotidiana semplificata per Metodo Billings e osservazione cervicale SHOW.</p>
+            <p>Campi grandi, meno scelte insieme e linguaggio pratico per l’uso da smartphone.</p>
           </div>
 
           <div class="form-grid">
             <form class="card form-card" id="biomarkerForm">
               <label>
-                Eta
-                <input type="number" id="ageInput" min="18" max="55" value="32" />
-              </label>
-
-              <label>
-                Mesi di tentativi mirati
-                <input type="number" id="monthsTryingInput" min="0" max="60" value="4" />
-              </label>
-
-              <label>
                 Sensazione vulvare
                 <select id="sensationInput">
                   <option value="dry">Asciutto</option>
-                  <option value="moist" selected>Umido</option>
+                  <option value="moist">Umido</option>
                   <option value="wet">Bagnato</option>
                   <option value="lubricative">Lubrificato</option>
                 </select>
@@ -121,7 +250,7 @@
                 <select id="mucusInput">
                   <option value="opaque">Opaco</option>
                   <option value="creamy">Cremoso</option>
-                  <option value="stretchy" selected>Filante</option>
+                  <option value="stretchy">Filante</option>
                   <option value="eggwhite">Chiara d'uovo</option>
                 </select>
               </label>
@@ -130,7 +259,7 @@
                 Spinnbarkeit
                 <select id="spinnbarkeitInput">
                   <option value="no">Assente</option>
-                  <option value="yes" selected>Presente</option>
+                  <option value="yes">Presente</option>
                 </select>
               </label>
 
@@ -138,7 +267,7 @@
                 Posizione cervice
                 <select id="cervixHeightInput">
                   <option value="low">Bassa</option>
-                  <option value="high" selected>Alta</option>
+                  <option value="high">Alta</option>
                 </select>
               </label>
 
@@ -146,7 +275,7 @@
                 Consistenza cervice
                 <select id="cervixTextureInput">
                   <option value="firm">Dura</option>
-                  <option value="soft" selected>Morbida</option>
+                  <option value="soft">Morbida</option>
                 </select>
               </label>
 
@@ -154,26 +283,11 @@
                 Apertura cervice
                 <select id="cervixOpenInput">
                   <option value="closed">Chiusa</option>
-                  <option value="open" selected>Aperta</option>
+                  <option value="open">Aperta</option>
                 </select>
               </label>
 
-              <label class="checkbox-row">
-                <input type="checkbox" id="irregularCyclesInput" />
-                Cicli irregolari
-              </label>
-
-              <label class="checkbox-row">
-                <input type="checkbox" id="pelvicPainInput" />
-                Dolore pelvico cronico
-              </label>
-
-              <label class="checkbox-row">
-                <input type="checkbox" id="pelvicInfectionInput" />
-                Pregresse infezioni pelviche
-              </label>
-
-              <button type="submit" class="primary-button">Aggiorna la valutazione</button>
+              <button type="submit" class="primary-button">Salva osservazioni di oggi</button>
             </form>
 
             <article class="card insight-card">
@@ -202,9 +316,7 @@
                 </div>
               </div>
 
-              <div class="alert-box" id="supportAlert">
-                Nessun alert specialistico immediato.
-              </div>
+              <div class="alert-box" id="supportAlert">Nessun alert specialistico immediato.</div>
             </article>
           </div>
         </section>
@@ -213,9 +325,9 @@
           <div class="section-heading">
             <div>
               <p class="eyebrow">Clinica domiciliare</p>
-              <h2>Grafici analitici</h2>
+              <h2>Grafici leggibili al volo</h2>
             </div>
-            <p>Visualizzazioni integrate per muco cervicale, BBT e andamento ormonale stimato.</p>
+            <p>Visualizzazioni essenziali, senza affollare lo schermo piccolo.</p>
           </div>
 
           <div class="analytics-grid">
@@ -257,27 +369,6 @@
                 Un rialzo termico sostenuto dopo il giorno del picco aiuta a confermare che l'ovulazione e probabilmente gia avvenuta.
               </p>
             </article>
-
-            <article class="card chart-card wide">
-              <div class="chart-header">
-                <h3>Andamento ormonale stimato</h3>
-                <span class="legend">Estrogeni, LH, progesterone</span>
-              </div>
-              <div class="hormone-bands">
-                <div>
-                  <span>Estrogeni</span>
-                  <div class="band estrogen"></div>
-                </div>
-                <div>
-                  <span>LH</span>
-                  <div class="band lh"></div>
-                </div>
-                <div>
-                  <span>Progesterone</span>
-                  <div class="band progesterone"></div>
-                </div>
-              </div>
-            </article>
           </div>
         </section>
 
@@ -287,7 +378,7 @@
               <p class="eyebrow">Lifestyle & wellness coach</p>
               <h2>Checklist preconcezionale</h2>
             </div>
-            <p>Piccoli gesti quotidiani per migliorare il contesto metabolico, infiammatorio e nutrizionale.</p>
+            <p>Promemoria semplici per costruire una routine sostenibile.</p>
           </div>
 
           <div class="wellness-grid">
@@ -303,19 +394,19 @@
             <article class="card diet-card">
               <h3>Dieta mediterranea</h3>
               <ul>
-                <li>Grassi monoinsaturi: olio extravergine d'oliva, avocado, frutta secca.</li>
-                <li>Omega-3 e pesce azzurro: supporto metabolico e antinfiammatorio.</li>
-                <li>Proteine vegetali e legumi: equilibrio glicemico e sazieta.</li>
-                <li>Antiossidanti da frutta, verdure, pomodoro, zinco e selenio.</li>
+                <li>Olio extravergine, avocado e frutta secca per i grassi monoinsaturi.</li>
+                <li>Pesce azzurro e omega-3 come supporto antinfiammatorio.</li>
+                <li>Legumi e proteine vegetali per una base metabolica piu stabile.</li>
+                <li>Antiossidanti da verdura, frutta, zinco e selenio.</li>
               </ul>
             </article>
 
             <article class="card toxin-card">
               <h3>Alert tossine</h3>
               <p>
-                Ridurre fumo, alcol e droghe ricreative e limitare l'eccesso di caffeina e una misura concreta per la salute preconcezionale.
+                Ridurre fumo, alcol e droghe ricreative e limitare la caffeina aiuta a proteggere fertilita e salute preconcezionale.
               </p>
-              <p class="micro-note">Promemoria: avviare l'acido folico almeno un mese prima del concepimento.</p>
+              <p class="micro-note">Promemoria: iniziare l'acido folico almeno un mese prima del concepimento.</p>
             </article>
           </div>
         </section>
@@ -326,7 +417,7 @@
               <p class="eyebrow">Rule of 35</p>
               <h2>Supporto diagnostico e triage</h2>
             </div>
-            <p>La logica di consulto si aggiorna in base a eta, durata dei tentativi e segnali di allarme.</p>
+            <p>Messaggi chiari, meno dispersivi, con focus sui segnali davvero utili.</p>
           </div>
 
           <div class="support-grid">
@@ -345,17 +436,21 @@
             </article>
 
             <article class="card">
-              <h3>Export medico</h3>
-              <p>
-                Prevedi un PDF con timeline dei cicli, giorno del picco, BBT, sintomi e terapie da condividere in visita.
-              </p>
-              <button class="secondary-button" type="button">Anteprima export</button>
+              <h3>Profilo clinico</h3>
+              <p id="profileClinicalText">Aggiorna i tuoi dati iniziali se cambiano ciclo medio, obiettivo o storia recente.</p>
             </article>
           </div>
         </section>
       </main>
     </div>
 
-    <script src="./app.js"></script>
+    <nav class="bottom-nav">
+      <a href="#dashboard" class="bottom-link">Home</a>
+      <a href="#logger" class="bottom-link">Log</a>
+      <a href="#analytics" class="bottom-link">Grafici</a>
+      <a href="#wellness" class="bottom-link">Coach</a>
+    </nav>
+
+    <script type="module" src="./app.js"></script>
   </body>
 </html>
