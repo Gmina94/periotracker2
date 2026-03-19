@@ -1,12 +1,12 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
 import {
-  getRedirectResult,
   getAuth,
   GoogleAuthProvider,
   onAuthStateChanged,
+  browserLocalPersistence,
+  setPersistence,
   signInWithPopup,
-  signInWithRedirect,
   signOut,
 } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
 import {
@@ -142,10 +142,6 @@ const profileClinicalText = document.querySelector("#profileClinicalText");
 
 function isFileProtocol() {
   return window.location.protocol === "file:";
-}
-
-function prefersRedirectLogin() {
-  return window.matchMedia("(max-width: 760px)").matches;
 }
 
 function formatDate(value) {
@@ -454,24 +450,9 @@ googleConnectButton.addEventListener("click", async () => {
 
   authStatus.textContent = "Accesso in corso...";
   try {
-    if (prefersRedirectLogin()) {
-      await signInWithRedirect(auth, googleProvider);
-      return;
-    }
-
+    await setPersistence(auth, browserLocalPersistence);
     await signInWithPopup(auth, googleProvider);
   } catch (error) {
-    if (error?.code === "auth/popup-blocked" || error?.code === "auth/cancelled-popup-request") {
-      authStatus.textContent = "Popup bloccato: provo il login con redirect, piu stabile su smartphone.";
-      try {
-        await signInWithRedirect(auth, googleProvider);
-        return;
-      } catch (redirectError) {
-        authStatus.textContent = getAuthErrorMessage(redirectError);
-        return;
-      }
-    }
-
     authStatus.textContent = getAuthErrorMessage(error);
   }
 });
@@ -576,10 +557,6 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-getRedirectResult(auth).catch((error) => {
-  authStatus.textContent = getAuthErrorMessage(error);
-});
-
 function getAuthErrorMessage(error) {
   const code = error?.code || "";
 
@@ -592,7 +569,7 @@ function getAuthErrorMessage(error) {
   }
 
   if (code === "auth/popup-blocked") {
-    return "Il browser ha bloccato il popup di Google. Riprova oppure usa il redirect.";
+    return "Il browser ha bloccato il popup di Google. Consenti i popup per questo sito e riprova.";
   }
 
   if (code === "auth/popup-closed-by-user") {
@@ -603,7 +580,7 @@ function getAuthErrorMessage(error) {
     return "Errore di rete durante il login Google. Controlla connessione e configurazione Firebase.";
   }
 
-  return "Accesso Google non riuscito. Controlla provider Google, domini autorizzati e che l'app sia aperta su localhost o su un dominio web valido.";
+  return "Accesso Google non riuscito. Su GitHub Pages usa il login popup, abilita il provider Google in Firebase e verifica che gmina94.github.io sia tra gli Authorized domains.";
 }
 
 if (isFileProtocol()) {
