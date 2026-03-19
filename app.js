@@ -1,10 +1,12 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
 import {
+  getRedirectResult,
   getAuth,
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithPopup,
+  signInWithRedirect,
   signOut,
 } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
 import {
@@ -137,6 +139,14 @@ const peakCaption = document.querySelector("#peakCaption");
 const rule35Text = document.querySelector("#rule35Text");
 const symptomText = document.querySelector("#symptomText");
 const profileClinicalText = document.querySelector("#profileClinicalText");
+
+function isFileProtocol() {
+  return window.location.protocol === "file:";
+}
+
+function prefersRedirectLogin() {
+  return window.matchMedia("(max-width: 760px)").matches;
+}
 
 function formatDate(value) {
   if (!value) return "Da impostare";
@@ -436,11 +446,33 @@ function validateOnboarding() {
 }
 
 googleConnectButton.addEventListener("click", async () => {
+  if (isFileProtocol()) {
+    authStatus.textContent =
+      "Apri l'app da http://localhost o da un dominio autorizzato Firebase: il login Google non funziona da file://.";
+    return;
+  }
+
   authStatus.textContent = "Accesso in corso...";
   try {
+    if (prefersRedirectLogin()) {
+      await signInWithRedirect(auth, googleProvider);
+      return;
+    }
+
     await signInWithPopup(auth, googleProvider);
-  } catch {
-    authStatus.textContent = "Accesso Google non riuscito. Controlla provider e domini autorizzati in Firebase.";
+  } catch (error) {
+    if (error?.code === "auth/popup-blocked" || error?.code === "auth/cancelled-popup-request") {
+      authStatus.textContent = "Popup bloccato: provo il login con redirect, piu stabile su smartphone.";
+      try {
+        await signInWithRedirect(auth, googleProvider);
+        return;
+      } catch (redirectError) {
+        authStatus.textContent = getAuthErrorMessage(redirectError);
+        return;
+      }
+    }
+
+    authStatus.textContent = getAuthErrorMessage(error);
   }
 });
 
@@ -543,3 +575,38 @@ onAuthStateChanged(auth, async (user) => {
     setView("onboarding");
   }
 });
+
+getRedirectResult(auth).catch((error) => {
+  authStatus.textContent = getAuthErrorMessage(error);
+});
+
+function getAuthErrorMessage(error) {
+  const code = error?.code || "";
+
+  if (code === "auth/unauthorized-domain") {
+    return "Dominio non autorizzato in Firebase. Aggiungi il dominio attuale tra gli Authorized domains.";
+  }
+
+  if (code === "auth/operation-not-allowed") {
+    return "Provider Google non attivo in Firebase Authentication. Abilitalo nella console Firebase.";
+  }
+
+  if (code === "auth/popup-blocked") {
+    return "Il browser ha bloccato il popup di Google. Riprova oppure usa il redirect.";
+  }
+
+  if (code === "auth/popup-closed-by-user") {
+    return "La finestra di accesso e stata chiusa prima del completamento.";
+  }
+
+  if (code === "auth/network-request-failed") {
+    return "Errore di rete durante il login Google. Controlla connessione e configurazione Firebase.";
+  }
+
+  return "Accesso Google non riuscito. Controlla provider Google, domini autorizzati e che l'app sia aperta su localhost o su un dominio web valido.";
+}
+
+if (isFileProtocol()) {
+  authStatus.textContent =
+    "Questa pagina e aperta come file locale. Per usare Google login avviala con un server locale, ad esempio http://localhost:8000.";
+}
