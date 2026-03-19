@@ -559,6 +559,7 @@ onAuthStateChanged(auth, async (user) => {
 
 function getAuthErrorMessage(error) {
   const code = error?.code || "";
+  const rawMessage = error?.message || "";
 
   if (code === "auth/unauthorized-domain") {
     return "Dominio non autorizzato in Firebase. Aggiungi il dominio attuale tra gli Authorized domains.";
@@ -572,15 +573,29 @@ function getAuthErrorMessage(error) {
     return "Il browser ha bloccato il popup di Google. Consenti i popup per questo sito e riprova.";
   }
 
+  if (code === "auth/cancelled-popup-request") {
+    return "Richiesta popup annullata. Chiudi eventuali popup aperti e riprova con un solo tocco sul pulsante Google.";
+  }
+
   if (code === "auth/popup-closed-by-user") {
     return "La finestra di accesso e stata chiusa prima del completamento.";
+  }
+
+  if (code === "auth/operation-not-supported-in-this-environment") {
+    return "Questo browser o contesto non supporta il login popup Firebase. Prova da Chrome, Safari o Firefox aperti normalmente.";
+  }
+
+  if (code === "auth/web-storage-unsupported") {
+    return "Il browser sta bloccando il web storage necessario per il login Firebase.";
   }
 
   if (code === "auth/network-request-failed") {
     return "Errore di rete durante il login Google. Controlla connessione e configurazione Firebase.";
   }
 
-  return "Accesso Google non riuscito. Su GitHub Pages usa il login popup, abilita il provider Google in Firebase e verifica che gmina94.github.io sia tra gli Authorized domains.";
+  const details = code ? ` (${code})` : "";
+  const suffix = rawMessage ? ` Dettaglio: ${rawMessage}` : "";
+  return `Accesso Google non riuscito${details}. Controlla provider Google, popup e dominio autorizzato.${suffix}`;
 }
 
 if (isFileProtocol()) {
